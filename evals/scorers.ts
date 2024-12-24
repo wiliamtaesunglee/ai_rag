@@ -18,13 +18,15 @@ export const ToolCallMatch: Scorer<any, {}> = async ({
     return response
   }
 
-  const [func] = tool_calls
-  const [expectedFunc] = expected.tool_calls
+  const [toolCall] = tool_calls
+  const { function: toolFuncCall } = toolCall
+  const [expectedToolCall] = expected.tool_calls
+  const { function: expectedFuncCall } = expectedToolCall
 
   score =
     role == 'assistant' &&
     tool_calls.length === 1 &&
-    func?.name == expectedFunc.function?.name
+    toolFuncCall.name == expectedFuncCall?.name
       ? 1
       : 0
 
